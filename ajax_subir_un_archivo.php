@@ -20,6 +20,34 @@
 				alert('tamaño archivo excede los 900Kb')
 				return;
 			}
+
+			//1.realizar peticio ajax
+			var datos = new FormData()
+			datos.append('fichero', archivo)
+			//2.parámetros de la peticion
+			var parametros = {
+ 				method: 'post',
+ 				body: datos
+			}
+
+			var servicio = 'servicio/ajax_recibir_un_archivo.php'
+			//3.realizar peticion
+			fetch(servicio, parametros)
+			.then(function(respuesta){
+				if(respuesta.ok){
+					return respuesta.text()
+				} else{
+					console.log(respuesta)
+					throw ('algo ha ido mal')
+				}
+			})
+			.then(function(mensaje){
+				alert(mensaje)
+			})
+			.catch(function(error){
+				alert(error)
+			})
+
 		}
 	</script>
 </head>
